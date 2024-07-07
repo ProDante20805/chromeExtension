@@ -1,23 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Auto Reload URL</title>
-  <style>
-    body {
-      width: 200px;
-      padding: 10px;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Refresh Extension</title>
 </head>
 <body>
-  <input type="text" id="url" placeholder="Enter URL" />
-  <button id="startButton">Start Auto Reload</button>
-  <button id="stopButton">Stop Auto Reload</button>
-  <script src="popup.js"></script>
+    <input type="text" id="urlInput" placeholder="Enter URL">
+    <input type="text" id="css" placeholder="Enter CSS">
+    <input type="text" id="duration" placeholder="Enter Second">
+    <button id="startButton">Start Auto Refresh</button>
+    <!-- <button id="stopButton">Stop Auto Refresh</button> -->
+
+    <script src="popup.js"></script>
 </body>
 </html>

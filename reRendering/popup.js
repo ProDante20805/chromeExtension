@@ -1,20 +1,14 @@
-let intervalId;
-
-document.getElementById('startButton').addEventListener('click', function() {
-  const url = document.getElementById('url').value;
-
-  if (url) {
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-      const activeTabId = tabs[0].id;
-      intervalId = setInterval(() => {
-        chrome.tabs.update(activeTabId, { url: url });
-      }, 10000);
-    });
-  } else {
-    alert('Please enter a valid URL');
-  }
+document.getElementById('startButton').addEventListener('click', () => {
+    const url = document.getElementById('urlInput').value;
+    const css = document.getElementById('css').value;
+    const duration = document.getElementById('duration').value * 1000;
+    if(url && duration) {
+        chrome.runtime.sendMessage({ action: 'start', url: url, duration: duration });
+    } else {
+        alert('Please enter a valid URL or Enter second');
+    }
 });
 
-document.getElementById('stopButton').addEventListener('click', function() {
-  clearInterval(intervalId);
-});
+// document.getElementById('stopButton').addEventListener('click', () => {
+//     chrome.runtime.sendMessage({ action: 'stop' });
+// });
