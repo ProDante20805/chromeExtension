@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "My Simple Extension",
+  "name": "Reload Specific URL",
   "version": "1.0",
-  "description": "A simple Chrome extension with a button and two input fields",
+  "description": "A simple extension to reload a specific URL when a button is clicked.",
+  "permissions": ["activeTab", "tabs"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -11,10 +12,7 @@
       "128": "icons/icon128.png"
     }
   },
-  "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
-  },
-  "permissions": []
+  "background": {
+    "service_worker": "background.js"
+  }
 }

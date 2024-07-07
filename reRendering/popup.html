@@ -1,28 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Popup</title>
+  <title>Auto Reload URL</title>
   <style>
     body {
       width: 200px;
       padding: 10px;
     }
-    input {
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 5px;
-    }
     button {
       width: 100%;
-      padding: 5px;
+      padding: 10px;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <input type="text" id="input1" placeholder="Input 1">
-  <input type="text" id="input2" placeholder="Input 2">
-  <button id="alertButton">Click Me</button>
-
+  <input type="text" id="url" placeholder="Enter URL" />
+  <button id="startButton">Start Auto Reload</button>
+  <button id="stopButton">Stop Auto Reload</button>
   <script src="popup.js"></script>
 </body>
 </html>

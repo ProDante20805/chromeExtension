@@ -1,5 +1,20 @@
-document.getElementById('alertButton').addEventListener('click', function() {
-  const input1 = document.getElementById('input1').value;
-  const input2 = document.getElementById('input2').value;
-  alert(`Input 1: ${input1}, Input 2: ${input2}`);
+let intervalId;
+
+document.getElementById('startButton').addEventListener('click', function() {
+  const url = document.getElementById('url').value;
+
+  if (url) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+      const activeTabId = tabs[0].id;
+      intervalId = setInterval(() => {
+        chrome.tabs.update(activeTabId, { url: url });
+      }, 10000);
+    });
+  } else {
+    alert('Please enter a valid URL');
+  }
+});
+
+document.getElementById('stopButton').addEventListener('click', function() {
+  clearInterval(intervalId);
 });
