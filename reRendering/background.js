@@ -66,3 +66,24 @@ function checkElement(css) {
     let purchaseBTN = document.querySelector(selector);
     return purchaseBTN ? 'yes' : 'no';
 }
+
+
+// intervalId = setInterval(() => {
+//     chrome.tabs.update(targetTabId, { url: targetUrl }, () => {
+//         chrome.scripting.executeScript(
+//             {
+//                 target: { tabId: targetTabId },
+//                 function: checkElement,
+//                 args: [css]
+//             },
+//             (results) => {
+//                 if (results && results[0] && results[0].result === 'no') {
+//                     console.log('no items, continuing to refresh.');
+//                 } else {
+//                     console.log('items exist, stopping auto-refresh.');
+//                     stopAutoRefresh();
+//                 }
+//             }
+//         );
+//     });
+// }, duration);
