@@ -1,6 +1,15 @@
 body{
     padding: 10px;
+    width: 300px; /* Set the desired width */
+    height: 200px; /* Set the desired height */
+    margin: 0;
+    overflow: hidden;
 }
 input{
     margin-top: 5px;
+}
+
+.btn_group {
+    display: flex;
+    justify-content: space-evenly;
 }
