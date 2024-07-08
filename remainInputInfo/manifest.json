@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Persistent Input Extension",
+  "version": "1.0",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
