@@ -21,27 +21,31 @@ function startAutoRefresh(url, css, duration) {
             }
 
             intervalId = setInterval(() => {
-                chrome.tabs.update(targetTabId, { url: targetUrl }, () => {
-                    chrome.scripting.executeScript(
-                        {
-                            target: { tabId: targetTabId },
-                            function: (css) => {
-                                // Create the selector string for the multiple classes
-                                let selector = css.split(' ').map(className => `.${className}`).join('');
-                                let purchaseBTN = document.querySelector(selector);
-                                return purchaseBTN ? 'yes' : 'no';
+                chrome.tabs.update(targetTabId, { url: targetUrl });
+
+                // Listen for the tab update to be completed
+                chrome.tabs.onUpdated.addListener(function tabUpdateListener(tabId, changeInfo) {
+                    if (tabId === targetTabId && changeInfo.status === 'complete') {
+                        // Remove the listener to avoid multiple triggers
+                        chrome.tabs.onUpdated.removeListener(tabUpdateListener);
+
+                        // Execute the script to check the element
+                        chrome.scripting.executeScript(
+                            {
+                                target: { tabId: targetTabId },
+                                function: checkElement,
+                                args: [css]
                             },
-                            args: [css]
-                        },
-                        (results) => {
-                            if (results && results[0] && results[0].result === 'no') {
-                                console.log('no items, continuing to refresh.');
-                            } else {
-                                console.log('items exist, stopping auto-refresh.');
-                                stopAutoRefresh();
+                            (results) => {
+                                if (results && results[0] && results[0].result === 'no') {
+                                    console.log('no items, continuing to refresh.');
+                                } else {
+                                    console.log('items exist, stopping auto-refresh.');
+                                    stopAutoRefresh();
+                                }
                             }
-                        }
-                    );
+                        );
+                    }
                 });
             }, duration);
         } else {
@@ -53,10 +57,12 @@ function startAutoRefresh(url, css, duration) {
 function stopAutoRefresh() {
     if (intervalId) {
         clearInterval(intervalId);
+        intervalId = null;
     }
 }
 
-function checkSoldout() {
-    let soldoutElement = document.querySelector('div.soldout');
-    return soldoutElement ? 'soldout' : 'not-soldout';
+function checkElement(css) {
+    let selector = css.split(' ').map(className => `.${className}`).join('');
+    let purchaseBTN = document.querySelector(selector);
+    return purchaseBTN ? 'yes' : 'no';
 }

@@ -45,6 +45,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const startButton = document.getElementById('startButton');
     const stopButton = document.getElementById('stopButton');
 
+    inputURL.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            // Perform your action here
+            const url = inputURL.value;
+            chrome.storage.sync.set({ savedURL: url }, function() {
+                console.log('url saved:', url);
+            });
+        }
+    });
+
+    inputCSS.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            // Perform your action here
+            const css = inputCSS.value;
+            chrome.storage.sync.set({ savedCSS: css }, function() {
+                console.log('css saved:', css);
+            });
+        }
+    });
+
+    inputDURATION.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            // Perform your action here
+            const duration = inputDURATION.value;
+            chrome.storage.sync.set({ savedDURATION: duration }, function() {
+                console.log('duration saved:', duration);
+            });
+        }
+    });
+
     // Load the saved input values when the popup is opened
     chrome.storage.sync.get(['savedURL', 'savedCSS', 'savedDURATION'], function(result) {
         if (result.savedURL) {
@@ -63,9 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const url = inputURL.value;
         const css = inputCSS.value;
         const duration = inputDURATION.value;
-        chrome.storage.sync.set({ savedURL: url, savedCSS: css, savedDURATION: duration }, function() {
-            console.log('Inputs saved:', url, css, duration);
-        });
 
         if(url && css && duration) {
             chrome.runtime.sendMessage({ action: 'start', url: url, css: css, duration: duration * 1000 });
