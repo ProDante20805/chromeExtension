@@ -9,6 +9,6 @@ document.getElementById('startButton').addEventListener('click', () => {
     }
 });
 
-// document.getElementById('stopButton').addEventListener('click', () => {
-//     chrome.runtime.sendMessage({ action: 'stop' });
-// });
+document.getElementById('stopButton').addEventListener('click', () => {
+    chrome.runtime.sendMessage({ action: 'stop' });
+});
