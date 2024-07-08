@@ -4,13 +4,13 @@ let targetUrl;
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === 'start') {
-        startAutoRefresh(request.url, request.duration);
+        startAutoRefresh(request.url, request.css, request.duration);
     } else if (request.action === 'stop') {
         stopAutoRefresh();
     }
 });
 
-function startAutoRefresh(url, duration) {
+function startAutoRefresh(url, css, duration) {
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         if (tabs && tabs.length > 0) {
             targetTabId = tabs[0].id;
@@ -25,13 +25,19 @@ function startAutoRefresh(url, duration) {
                     chrome.scripting.executeScript(
                         {
                             target: { tabId: targetTabId },
-                            function: checkSoldout
+                            function: (css) => {
+                                // Create the selector string for the multiple classes
+                                let selector = css.split(' ').map(className => `.${className}`).join('');
+                                let purchaseBTN = document.querySelector(selector);
+                                return purchaseBTN ? 'yes' : 'no';
+                            },
+                            args: [css]
                         },
                         (results) => {
-                            if (results && results[0] && results[0].result === 'soldout') {
-                                console.log('Soldout element found, continuing to refresh.');
+                            if (results && results[0] && results[0].result === 'no') {
+                                console.log('no items, continuing to refresh.');
                             } else {
-                                console.log('Soldout element not found, stopping auto-refresh.');
+                                console.log('items exist, stopping auto-refresh.');
                                 stopAutoRefresh();
                             }
                         }

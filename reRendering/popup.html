@@ -11,7 +11,7 @@
     <div class="form-group">
         <input type="text" class="form-control" id="urlInput" placeholder="URLを入力してください。">
         <input type="text" class="form-control" id="css" placeholder="CSS を入力してください。">
-        <input type="text" class="form-control" id="duration" placeholder="時間を入力してください。">
+        <input type="number" class="form-control" min=0 id="duration" placeholder="時間を入力してください。">
     </div>
     <div class="btn">
         <button class="btn btn-primary" id="startButton">スタート</button>
@@ -20,7 +20,6 @@
         <button class="btn btn-danger" id="stopButton">ストップ</button>
     </div>
     
-
     <script src="popup.js"></script>
 </body>
 </html>
